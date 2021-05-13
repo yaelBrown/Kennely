@@ -1,4 +1,15 @@
 import React, { Component } from 'react'
+import Icon from "@iconify/react"
+
+import feedIcon from '@iconify-icons/gg/feed';
+import messageOutlined from '@iconify-icons/ant-design/message-outlined';
+import friendsIcon from '@iconify-icons/whh/friends';
+import albumsIcon from '@iconify-icons/ion/albums';
+import animalIcon from '@iconify-icons/cil/animal';
+import welcomeWriteBlog from '@iconify-icons/dashicons/welcome-write-blog';
+import groceryOrSupermarket from '@iconify-icons/map/grocery-or-supermarket';
+import workIcon from '@iconify-icons/bytesize/work';
+import settingsLine from '@iconify-icons/clarity/settings-line';
 
 import SidebarLeftLogin from './SidebarLeftLogin.js'
 import SidebarLeftProfilePicture from './SidebarLeftProfilePicture.js'
@@ -11,15 +22,15 @@ export default class SidebarLeft extends Component {
   
     this.state = {
        sidebarItems: [
-        { name: "Feed", icon: "gg-feed"},
-        { name: "Messenger", icon: "ant-design:message-outlined"},
-        { name: "Friends", icon: "whh-friends"},
-        { name: "Albums", icon: "wpf-stack-of-photos"},
-        { name: "Adopt", icon: "cil-animal"},
-        { name: "Blog", icon: "dashicons-welcome-write-blog"},
-        { name: "Market", icon: "map-grocery-or-supermarket"},
-        { name: "Jobs", icon: "bytesize-work"},
-        { name: "Settings", icon: "clarity:settings-line" },
+        { name: "Feed", icon: feedIcon},
+        { name: "Messenger", icon: messageOutlined},
+        { name: "Friends", icon: friendsIcon},
+        { name: "Albums", icon: albumsIcon},
+        { name: "Adopt", icon: animalIcon},
+        { name: "Blog", icon: welcomeWriteBlog},
+        { name: "Market", icon: groceryOrSupermarket},
+        { name: "Jobs", icon: workIcon},
+        { name: "Settings", icon: settingsLine},
       ]
     }
   }
@@ -39,7 +50,8 @@ export default class SidebarLeft extends Component {
         return out.push(
           <tr key={e.name}>
             <td>
-              <span className="sidebarItemIcon">i</span> 
+              {/* <span className="sidebarItemIcon">i</span> */}
+              <Icon icon={e.icon} className="sidebarItemIcon"/> 
             </td>
             <td>
               <span 
@@ -61,6 +73,7 @@ export default class SidebarLeft extends Component {
           <table id="sidebarLeftBottomTable">
             <tbody>
               { renderMenuItems() }
+
             </tbody>
           </table>
         </div>

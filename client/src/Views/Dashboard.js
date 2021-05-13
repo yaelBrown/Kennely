@@ -97,7 +97,7 @@ export default class Dashboard extends Component {
       )
     } else {
       return (
-        <div>
+        <div id="dashboardBackground">
           <SearchBar 
             data={{changeDisplay: this.changeDisplay.bind(this)}}
             newNotifications={this.state.dashboardData.notifications.isNewNotifications}

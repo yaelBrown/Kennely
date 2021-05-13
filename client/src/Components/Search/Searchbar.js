@@ -9,6 +9,7 @@ import notificationNew from '@iconify-icons/carbon/notification-new'
 import profileIcon from '@iconify-icons/gg/profile'
 
 import '../../Assets/css/searchBar.css'
+
 export default class Searchbar extends Component {
   constructor(props) {
     super(props)
@@ -66,10 +67,16 @@ export default class Searchbar extends Component {
     return (
       <div id="searchBar">
         <div id="searchLeft" onClick={() => this.props.data.changeDisplay("feed")}>
-          <h3>logo</h3>
+          <h5>logo</h5>
         </div>
         <div id="searchMiddle">
-          <h3>searchbar</h3>
+          {/* <h3>searchbar</h3> */}
+          <input 
+            type="text" 
+            placeholder="search"
+            id="searchBarField"
+            ></input>
+        
         </div>
         <div id="searchRight">
           <Icon icon="bi:cart"/>

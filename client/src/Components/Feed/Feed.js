@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import classnames from 'classnames'
 import { connect } from 'react-redux'
+import Icon from "@iconify/react"
 import LoadingCat from '../../Assets/img/LoadingCat.gif'
 import FeedCreatePost from '../Feed/FeedCreatePost.js'
 import FeedPost from '../Feed/FeedPost.js'
+import catFace from '@iconify-icons/emojione/cat-face';
+import dogFace from '@iconify-icons/emojione/dog-face';
 
 import FeedService from '../../Services/FeedService.js'
 import UserService from '../../Services/UserService.js'
@@ -18,7 +23,10 @@ class Feed extends Component {
       loading: false,
       adFrequency: 8,
       masterFeed: [],
-      userCache: {}
+      userCache: {},
+      tabs: {
+        activeTab: "1"
+      }
     }
   }
   
@@ -37,7 +45,8 @@ class Feed extends Component {
     //       this.setState(newState)
     //     }
     //   })
-    this.getFeed()
+
+    // this.getFeed()
   }
 
   async updateFeed() {
@@ -91,6 +100,20 @@ class Feed extends Component {
     return visibleFeed;
   }
 
+  setActiveTab(tabNum) {
+    console.log(tabNum)
+    this.setState({tab: {activeTab: tabNum}})
+    console.log(this.state.tabs.activeTab)
+  }
+
+  toggle(tab) {
+    console.log(this.state.tabs.activeTab)
+    console.log(tab)
+    if (this.state.tabs.activeTab != tab) {
+      this.setState({tabs: { activeTab: tab }});
+    }
+  }
+
   examplePostText() {
     return {
       postId: 123456789,
@@ -139,7 +162,68 @@ class Feed extends Component {
         return (
           <div className="dashboardContentPanels">
             <FeedCreatePost data={{updateFeed: this.getFeed.bind(this)}}/>
-            <hr/>
+            <Nav tabs>
+            
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: this.state.tabs.activeTab === '1' })}
+                  onClick={() => { this.toggle('1'); }}
+                >
+                <small>Everyone</small>
+                </NavLink>
+              </NavItem>
+              
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: this.state.tabs.activeTab === '2' })}
+                  onClick={() => { this.toggle('2'); }}
+                >
+                <small>Friends</small>
+                </NavLink>
+              </NavItem>
+              
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: this.state.tabs.activeTab === '2' })}
+                  onClick={() => { this.toggle('3'); }}
+                >
+                <Icon icon={dogFace}/>
+                </NavLink>
+              </NavItem>
+              
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: this.state.tabs.activeTab === '2' })}
+                  onClick={() => { this.toggle('4'); }}
+                >
+                <Icon icon={catFace}/>
+                </NavLink>
+              </NavItem>
+
+            </Nav>
+      
+            <TabContent activeTab={this.state.tabs.activeTab}>
+              
+              <TabPane tabId="1">
+                <h4>1</h4>
+              </TabPane>
+
+              <TabPane tabId="2">
+                <h4>2</h4>
+              </TabPane>
+              
+              <TabPane tabId="3">
+                <h4>3</h4>
+              </TabPane>
+
+              <TabPane tabId="4">
+                <h4>4</h4>
+              </TabPane>
+
+
+
+            </TabContent>
+
             { this.generateFeed() }
             {/* <FeedPost data={this.examplePostText()}/>
             <FeedPost data={this.examplePostPhoto()}/>
