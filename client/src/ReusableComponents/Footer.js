@@ -12,7 +12,7 @@ export default function Footer() {
         <li><a href="/">Home</a></li>
         <li><a href="/">Home</a></li>
       </ul>
-      <h3 id="version">v0.800</h3>
+      <p id="version">v0.800</p>
     </div>
   )
 }

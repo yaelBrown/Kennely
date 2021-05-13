@@ -2,4 +2,39 @@
   display: inline-flex;
   flex-direction: column;
   margin: auto;
+  height: 400px;
+}
+
+.loginButtonRow, .registerButtonRow {
+  display: inline-flex;
+  justify-content: space-evenly;
+}
+
+#loginTable {
+  margin-top: 3rem;
+}
+
+#loginTableThirdRow {
+  text-align: left;
+}
+
+.registerForm h3 {
+  text-align: center !important;
+} 
+
+#registerTable {
+  width: 24rem !important;
+  margin: 2rem;
+}
+
+.registerTableLeft {
+  width: 10rem !important;
+}
+
+.registerTableRight {
+
+}
+
+.registerTableRight input {
+  width: 100%;
 }

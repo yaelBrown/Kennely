@@ -2,23 +2,9 @@ import axios from 'axios'
 import API_URL from '../Api/api.js'
 import jwt_decode from "jwt-decode";
 
-// Check if user is logged in
-
 const PREFIX = "users/"
-class LoginService {
-  isLoggedIn = () => {
-    let token = localStorage.getItem("token")
-    if (token) {
-      if (jwt_decode(token).exp < Date.now() / 1000) {
-        localStorage.clear()
-        return false
-      }
-      return true
-    } else {
-      return false
-    }
-  }
-  
+
+class LoginService { 
   login = async (email, password, rememberMe) => {
     let config = {
       method: 'post',

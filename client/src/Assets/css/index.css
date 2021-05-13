@@ -21,3 +21,15 @@ code {
   border: 1px solid #000;
   z-index: 999;
 }
+
+.textLeft {
+  text-align: left;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.textRight {
+  text-align: right;
+}

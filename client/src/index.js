@@ -7,6 +7,10 @@ import { Provider } from 'react-redux'
 
 import store from './Redux/store.js'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Assets/css/peterest-theme.css';
+
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

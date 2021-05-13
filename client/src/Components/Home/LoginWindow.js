@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button } from 'reactstrap'
 import { connect } from 'react-redux'
 
 import LoginService from '../../Services/LoginService.js'
@@ -52,11 +53,11 @@ class LoginWindow extends Component {
   render() {
     return (
       <div className="loginForm">
-        <h2>Login</h2>
-        <table>
+        <h3>Login</h3>
+        <table id="loginTable">
           <tbody>
             <tr>
-              <td><h3>Email</h3></td>
+              <td className="textLeft"><h6>Email</h6></td>
               <td><input 
                 type="text" 
                 placeholder="email@address.com" 
@@ -64,7 +65,7 @@ class LoginWindow extends Component {
                 value={this.state.email}></input></td>
             </tr>
             <tr>
-              <td><h3>Password</h3></td>
+              <td className="textLeft"><h6>Password</h6></td>
               <td><input 
                 type="password" 
                 placeholder="password" 
@@ -72,7 +73,7 @@ class LoginWindow extends Component {
                 value={this.state.password}></input></td>
             </tr>
             <tr>
-              <td><input 
+              <td id="loginTableThirdRow"><input 
                 type="checkbox" 
                 onChange={(e) => this.handleChange("rememberMe", e.target.value)}
                 value={this.state.rememberMe}></input> <small>Remember me?</small></td>
@@ -81,8 +82,8 @@ class LoginWindow extends Component {
           </tbody>
         </table>
         <div className="loginButtonRow">
-          <button onClick={() => this.handleLogin()}>Login</button><br/>
-          <button onClick={() => this.props.data.changeDisplay("register")}>Register</button>
+          <Button color="secondary" onClick={() => this.props.data.changeDisplay("register")}>Register</Button>
+          <Button color="primary" onClick={() => this.handleLogin()}>Login</Button>
         </div>
       </div>
     )

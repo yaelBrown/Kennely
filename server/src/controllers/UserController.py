@@ -44,6 +44,17 @@ def login():
 
 @userController.route('/register', methods=['POST'])
 def registerUser():
+  """
+  Expected data/json
+    {
+      "email": "yaeli@yaelbrown.com",
+      "password": "yaelPass",
+      "name": "Yael",
+      "location": "YaelVille, USA",
+      "gender": true,
+      "profilePic": "yaelProfile.jpg"
+    }
+  """
   data = request.get_json()
   
   if data == None: 
@@ -56,13 +67,14 @@ def registerUser():
   newUser["location"] = data["location"]
   newUser["gender"] = data["gender"]
   newUser["coverPic"] = ""
-  newUser["profilePic"] = ""
   newUser["dateCreated"] = calendar.timegm(time.gmtime())
   newUser["dateLastLogin"] = int()
-  newUser["optionsId"] = dict()
+  newUser["isAdmin"] = 0
 
   if data["profilePic"] == None: 
-    newUser["profilePic"] = ""
+    newUser["profilePic"] = "" # eventually add url for default profile picture
+  else: 
+    newUser["profilePic"] = data["profilePic"]
 
   nU = u.registerUser(newUser)
 
@@ -71,7 +83,7 @@ def registerUser():
   else: 
     cache[nU] = newUser
     del newUser["password"]
-    newUser["_id"] = str(newUser["_id"])
+    # newUser["_id"] = str(newUser["_id"]) # Only to prevent error for mongodb
     return {"msg": "successfully registered user", "data": newUser}, 200 
 
 @userController.route('/edit', methods=["PUT"])
