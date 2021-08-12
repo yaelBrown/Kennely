@@ -18,6 +18,19 @@
 --
 -- Table structure for table `comments`
 --
+CREATE DATABASE IF NOT EXISTS `peterest_db`;
+
+USE peterest_db;
+
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT, 
+  `author_id` int NOT NULL, 
+  `caption` VARCHAR(255) NULL,
+  `postType` VARCHAR(255) NOT NULL,
+  `contentSrc` VARCHAR(255) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 DROP TABLE IF EXISTS `comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
