@@ -6,7 +6,7 @@ import calendar
 import time
 import sys
 
-from bson import json_util, ObjectId
+from bson import ObjectId
 
 from config.config_mysql import (cur, con)
 

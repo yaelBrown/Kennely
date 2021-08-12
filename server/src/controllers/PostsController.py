@@ -34,7 +34,7 @@ def createPost():
 
   newPost = {} 
 
-  newPost["authorId"] = data["authorId"]
+  newPost["author_id"] = data["author_id"]
   newPost["dateTime"] = calendar.timegm(time.gmtime())
   newPost["caption"] = data["caption"]
   newPost["likes"] = 0
@@ -49,10 +49,10 @@ def createPost():
   else:
     newPost["contentSrc"] = data["contentSrc"]
   
-  if data["petsTagged"] == None: 
-    newPost["petsTagged"] = []
-  else: 
-    newPost["petsTagged"] = data["petsTagged"]
+  # if data["petsTagged"] == None: 
+  #   newPost["petsTagged"] = []
+  # else: 
+  #   newPost["petsTagged"] = data["petsTagged"]
 
   res = post.createPost(newPost)
 

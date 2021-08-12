@@ -7,7 +7,7 @@ from config.config_mongo import db
 class PostsService: 
   def createPost(self, p):
     try: 
-      newPosts = db.posts.insert_one(p)
+      newPosts = db.posts.insert_one(p)           # convert this method to mysql
       return str(newPosts.inserted_id)
     except Exception as e:
       print(e)

@@ -7,7 +7,7 @@ import calendar
 import time
 
 import services.UserService as userService
-import services.OptionService as optionSerice
+# import services.OptionService as optionSerice
 import services.PetsService as petsService
 import services.PostsService as postsService
 import services.PhotosService as photoService
@@ -15,12 +15,12 @@ import services.FollowersService as followerService
 import services.NotificationService as notificationService
 
 u = userService.UserService()
-o = optionSerice.OptionService()
-pet = petsService.PetsService()
-post = postsService.PostsService()
-photo = photoService.PhotoService()
-f = followerService.FollowerService()
-n = notificationService.NotificationService()
+# o = optionSerice.OptionService()
+# pet = petsService.PetsService()
+# post = postsService.PostsService()
+# photo = photoService.PhotoService()
+# f = followerService.FollowerService()
+# n = notificationService.NotificationService()
 
 userController = Blueprint('userController', __name__)
 

@@ -19,6 +19,7 @@ import Messenger from '../Components/Messenger/Messenger.js'
 import Blog from '../Components/Blog/Blog.js'
 
 import '../Assets/css/dashboard.css'
+
 export default class Dashboard extends Component {
   constructor(props) {
     super(props)
