@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState, useCallback } from 'react'
 import { Button } from 'reactstrap'
 import { connect } from 'react-redux'
 
@@ -6,88 +6,87 @@ import LoginService from '../../Services/LoginService.js'
 
 import '../../Assets/css/loginRegisterForgetForms.css'
 
-import * as actionTypes from '../../Redux/Home/homeActions.js'
-import { addUserToStore } from '../../Redux/Home/homeActions.js'
-
-class LoginWindow extends Component {
-  constructor(props) {
-    super(props)
-  
-    this.state = {
-       email: "",
-       password: "",
-       rememberMe: false,
-    }
+function LoginWindow(props) {
+  const initialState = {
+      email: "",
+      password: "",
+      rememberMe: false,
   }
 
-  clearPasswordWithinForm = () => {
-    this.setState({password: ""})
+  const [state, setState] = useState(initialState)
+
+  const clearPasswordWithinForm = () => {
+   setState(state.password = "")
   }
 
-  handleChange = (property, val) => {
+  const handleChange = (property, val) => {
     val = val.trim()
-    this.setState({[property]: val})
+    let newState = {...state}
+    newState[property] = val
+    setState(newState)
   }
  
-  handleLogin = () => {
-    if (!this.state.email || !this.state.password) return
-    let rememberMe = this.state.rememberMe
+  const handleLogin = () => {
+    console.log("handleLogin")
+    console.log({email: state.email, password: state.password, rememerMe: state.rememberMe})
+
     
-    if (this.state.rememberMe === "on") {
+    if (!state.email || !state.password) return
+    let rememberMe = state.rememberMe
+    
+    if (state.rememberMe === "on") {
       rememberMe = true
     }
-    console.log({email: this.state.email, password: this.state.password, rememberMe})
-    LoginService.login(this.state.email, this.state.password, rememberMe)
+
+    LoginService.login(state.email, state.password, rememberMe)
       .then(data => {
-        console.log(data)
+        // console.log(data)
         if (typeof(data)  === "object") {
-          this.props.userToStore(data)
+          props.userToStore(data)
           window.location.href = "/dashboard"
         } else { 
-          this.clearPasswordWithinForm()
+          clearPasswordWithinForm()
           console.error("Invalid Login")
         }
       })
   }
 
-  render() {
-    return (
-      <div className="loginForm">
-        <h3>Login</h3>
-        <table id="loginTable">
-          <tbody>
-            <tr>
-              <td className="textLeft"><h6>Email</h6></td>
-              <td><input 
-                type="text" 
-                placeholder="email@address.com" 
-                onChange={(e) => this.handleChange("email", e.target.value)}
-                value={this.state.email}></input></td>
-            </tr>
-            <tr>
-              <td className="textLeft"><h6>Password</h6></td>
-              <td><input 
-                type="password" 
-                placeholder="password" 
-                onChange={(e) => this.handleChange("password", e.target.value)}
-                value={this.state.password}></input></td>
-            </tr>
-            <tr>
-              <td id="loginTableThirdRow"><input 
-                type="checkbox" 
-                onChange={(e) => this.handleChange("rememberMe", e.target.value)}
-                value={this.state.rememberMe}></input> <small>Remember me?</small></td>
-              <td><small onClick={() => this.props.data.changeDisplay("forgot")} style={{cursor: "pointer"}}>Forgot Password</small></td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="loginButtonRow">
-          <Button color="secondary" onClick={() => this.props.data.changeDisplay("register")}>Register</Button>
-          <Button color="primary" onClick={() => this.handleLogin()}>Login</Button>
-        </div>
+  return (
+    <div className="loginForm">
+      <h3>Login</h3>
+      <table id="loginTable">
+        <tbody>
+          <tr>
+            <td className="textLeft"><h6>Email</h6></td>
+            <td><input 
+              type="text" 
+              placeholder="email@address.com" 
+              onChange={(e) => handleChange("email", e.target.value)}
+              value={state.email}></input></td>
+          </tr>
+          <tr>
+            <td className="textLeft"><h6>Password</h6></td>
+            <td><input 
+              type="password" 
+              placeholder="password" 
+              onChange={(e) => handleChange("password", e.target.value)}
+              value={state.password}></input></td>
+          </tr>
+          <tr>
+            <td id="loginTableThirdRow"><input 
+              type="checkbox" 
+              onChange={(e) => handleChange("rememberMe", e.target.value)}
+              value={state.rememberMe}></input> <small>Remember me?</small></td>
+            <td><small onClick={() => props.data.changeDisplay("forgot")} style={{cursor: "pointer"}}>Forgot Password</small></td>
+          </tr>
+        </tbody>
+      </table>
+      <div className="loginButtonRow">
+        <Button color="secondary" onClick={() => props.data.changeDisplay("register")}>Register</Button>
+        <Button color="primary" onClick={() => handleLogin()}>Login</Button>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 const mapStateToProps = state => {
@@ -98,7 +97,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    userToStore: (userData) => dispatch(addUserToStore(userData)) // need to add payload to this method
+    userToStore: (payload) => dispatch({ type: "USER_TO_STORE", payload })
   }
 }
 

@@ -6,7 +6,7 @@ import userReducer from './Users/userReducer.js'
 
 const rootReducer = combineReducers({
   home: homeReducer,
-  users: userReducer,
+  user: userReducer,
   dashboard: dashboardReducer
 })
 
