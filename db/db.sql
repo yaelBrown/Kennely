@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.24, for Linux (x86_64)
 --
--- Host: localhost    Database: Peterest
+-- Host: localhost    Database: peterest_db
 -- ------------------------------------------------------
--- Server version	8.0.22
+-- Server version	8.0.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,19 +18,6 @@
 --
 -- Table structure for table `comments`
 --
-CREATE DATABASE IF NOT EXISTS `peterest_db`;
-
-USE peterest_db;
-
-CREATE TABLE IF NOT EXISTS `posts` (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT, 
-  `author_id` int NOT NULL, 
-  `caption` VARCHAR(255) NULL,
-  `postType` VARCHAR(255) NOT NULL,
-  `contentSrc` VARCHAR(255) NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 
 DROP TABLE IF EXISTS `comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -113,6 +100,32 @@ LOCK TABLES `pictures` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `posts`
+--
+
+DROP TABLE IF EXISTS `posts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `posts` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `author_id` int NOT NULL,
+  `caption` varchar(255) DEFAULT NULL,
+  `postType` varchar(255) NOT NULL,
+  `contentSrc` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `posts`
+--
+
+LOCK TABLES `posts` WRITE;
+/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -121,14 +134,18 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) DEFAULT NULL,
-  `pw` varchar(100) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `gender` tinyint(1) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL,
-  `NAME` varchar(50) DEFAULT NULL,
-  `settings` json DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `profile_pic` varchar(255) DEFAULT NULL,
+  `date_created` varchar(255) NOT NULL,
+  `date_last_login` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,7 +154,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin','$2b$12$74lOtYxx7Yb1q0qFGuamJuVDWqlujYWWz8WncKOMlO23RcSuxtQ0m',1,'Admin',NULL),(2,'test','$2b$12$H82yidq31txJaPloMGJn0.DEODCOspiWNmOdc/I3NzX0T4F64BNEa',0,'Test',NULL),(3,'yael','$2b$12$8DkTQ9a2yaANWgE2yAnSoepXAajdosDaSuBDfcjzj1x0VaRaBVpUC',0,'Yael',NULL);
+INSERT INTO `users` VALUES (7,'yaeli@yaelbrown.com','YaelVille, USA','$2b$12$JkK04HVuXBHUJxAGsOhebeK2w9XUjQxM8NIZ9i/.Majz8clhVbYnq',1,0,'Yael','yaelProfile.jpg','2021-08-13',''),(8,'test@test.com','TestVille, USA','$2b$12$gZsHaRN.QimOGcIo0bVLfu9SoTFQWuu/G0koW8Y6tWgGP1lPJGInC',1,0,'Test','','2021-08-13',''),(9,'admin@admin.com','AdminVille, USA','$2b$12$Lx/PoP9inAFDjQ7LmqteZ.WHxqSqit4NQ5bSdQaUd68Fh4anhfXfu',1,0,'Admin','','2021-08-13','');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -150,4 +167,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-23 20:31:41
+-- Dump completed on 2021-08-14  4:29:40

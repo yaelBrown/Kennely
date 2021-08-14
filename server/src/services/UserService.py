@@ -1,6 +1,6 @@
 import json
 from flask_bcrypt import Bcrypt
-import jwt
+from flask_jwt import jwt, jwt_required, current_identity
 import datetime
 import calendar
 import time
@@ -12,76 +12,71 @@ from config.config_mysql import (cur, con)
 
 class UserService: 
 
-  def loginUser(self, email, password, remember):
-    def updateLastLogin():
+  def loginUser(self, email, password):
+    
+    def _updateLastLogin():
       try: 
-        dll = calendar.timegm(time.gmtime())
-        sql = "Update users set dateLastLogin = %s where email = %s"
+        dll = datetime.datetime.now().strftime('%Y-%m-%d %H:%M') # dll - date last loggedIn
+        sql = "Update users set date_last_login = %s where email = %s"
 
         cur.execute(sql, (dll, email))
         con.commit()
+
       except Exception as e:
         print(e)
         return False
 
     try: 
       requestedUser = self.getUser(email)
+      
       if requestedUser is None:
-        raise RuntimeError("Cannot find user by email: " + email)
+        raise Exception("Cannot find user by email: " + email)
+      
       hashedPw = Bcrypt.generate_password_hash(None, password, 12)
 
       if Bcrypt.check_password_hash(None, requestedUser["password"], password):
-        if remember: 
-          tokenData = {
-            "email": email, 
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(days=365)
-          }
-        else:   
-          tokenData = {
-            "email": email, 
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)
-          }
-
-        secret = "Ilovethosep3ts"
-        token = jwt.encode(tokenData, secret)
+        # secret = "Ilovethosep3ts"
+        # token = jwt.jwt_encode_handler(requestedUser, secret)
         
-        updateLastLogin()
+        _updateLastLogin()
         
         out = {
           "id": requestedUser["id"],
           "email": requestedUser["email"]
-          }
+        }
         
-        return {"token": token.decode("UTF-8"), "user": out}
+        return {"token": "token", "user": out, "msg": "ok"}
       else: 
         raise Exception("Incorrect Password")
     except Exception as e: 
-      print(e)
-      return False
+      print({"msg": e})
+      return {"msg": e}
+
 
   def registerUser(self, newUser): 
     try: 
-      sql = 'insert into users (email, password, isAdmin, name, location, gender, coverPic, profilePic, dateCreated, dateLastLogin) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
-      print(newUser)
+      sql = "insert into users (email, location, password, gender, isAdmin, name, profile_pic, date_created, date_last_login) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+      
+      # print(newUser)
+      
       cur.execute(sql, (
         newUser["email"],
+        newUser["location"],
         newUser["password"],
+        newUser["gender"],
         newUser["isAdmin"],
         newUser["name"],
-        newUser["location"],
-        newUser["gender"],
-        newUser["coverPic"],
-        newUser["profilePic"],
-        newUser["dateCreated"],
-        newUser["dateLastLogin"],
+        newUser["profile_pic"],
+        newUser["date_created"],
+        newUser["date_last_login"],
       ))
-
+      
       con.commit()
       return True
-    
+
     except Exception as e: 
       print(e)
-      return False
+      return str(e)
 
   def editUser(self, u):
     pass

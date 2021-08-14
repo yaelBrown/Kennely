@@ -36,7 +36,7 @@ class LoginWindow extends Component {
     if (this.state.rememberMe === "on") {
       rememberMe = true
     }
-    // console.log({email: this.state.email, password: this.state.password, rememberMe})
+    console.log({email: this.state.email, password: this.state.password, rememberMe})
     LoginService.login(this.state.email, this.state.password, rememberMe)
       .then(data => {
         console.log(data)

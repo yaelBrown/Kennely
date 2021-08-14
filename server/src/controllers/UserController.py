@@ -1,5 +1,6 @@
 from flask import Flask, request, Blueprint, jsonify
 from flask_bcrypt import Bcrypt
+from datetime import datetime
 
 import json
 import jwt
@@ -7,20 +8,8 @@ import calendar
 import time
 
 import services.UserService as userService
-# import services.OptionService as optionSerice
-import services.PetsService as petsService
-import services.PostsService as postsService
-import services.PhotosService as photoService
-import services.FollowersService as followerService
-import services.NotificationService as notificationService
 
 u = userService.UserService()
-# o = optionSerice.OptionService()
-# pet = petsService.PetsService()
-# post = postsService.PostsService()
-# photo = photoService.PhotoService()
-# f = followerService.FollowerService()
-# n = notificationService.NotificationService()
 
 userController = Blueprint('userController', __name__)
 
@@ -29,15 +18,23 @@ cache = {}
 
 @userController.route('/login', methods=['POST'])
 def login():
+  """
+  Expected data/json
+    {
+      email: "test@test.com"
+      password: "test"
+      rememberMe: false
+    }
+  """
   data = request.get_json()
   email = data["email"]
   password = data["password"]
-  rememberMe = data["rememberMe"]
+  # rememberMe = data["rememberMe"] # this is passed for future functionality
 
-  out = u.loginUser(email, password, rememberMe)
+  out = u.loginUser(email, password)
 
-  if out is False: 
-    return {"msg": "user not found"}, 200
+  if out["msg"] != "ok": 
+    return { "msg": "user not found", "err": out["msg"] }, 200
   else: 
     return out, 200
 
@@ -61,27 +58,25 @@ def registerUser():
     return {"msg": "Empty Request"}, 422
 
   newUser = {}
-  newUser["password"] = Bcrypt.generate_password_hash(None, data["password"], _rounds)
   newUser["email"] = data["email"]
-  newUser["name"] = data["name"]
   newUser["location"] = data["location"]
+  newUser["password"] = Bcrypt.generate_password_hash(None, data["password"], 12)
   newUser["gender"] = data["gender"]
-  newUser["coverPic"] = ""
-  newUser["dateCreated"] = calendar.timegm(time.gmtime())
-  newUser["dateLastLogin"] = int()
   newUser["isAdmin"] = 0
-
-  if data["profilePic"] == None: 
-    newUser["profilePic"] = "" # eventually add url for default profile picture
+  newUser["name"] = data["name"]
+  if data["profilePic"] == None or data["profilePic"] == "": 
+    newUser["profile_pic"] = "" # eventually add url for default profile picture
   else: 
-    newUser["profilePic"] = data["profilePic"]
+    newUser["profile_pic"] = data["profilePic"]
+  newUser["date_created"] = datetime.datetime.now().strftime('%Y-%m-%d')
+  newUser["date_last_login"] = ""
 
   nU = u.registerUser(newUser)
 
-  if nU == False:
-    return {"msg": "Unable to create new user"}, 422
+  if nU != True:
+    return {"msg": "Unable to create new user", "new_user": nU}, 422
   else: 
-    cache[nU] = newUser
+    # cache[nU] = newUser
     del newUser["password"]
     # newUser["_id"] = str(newUser["_id"]) # Only to prevent error for mongodb
     return {"msg": "successfully registered user", "data": newUser}, 200 
