@@ -7,6 +7,6 @@ con = pymysql.Connect(
   db='peterest_db', 
   charset='utf8', 
   cursorclass=pymysql.cursors.DictCursor, 
-  port=3306)
+  port=3307)
 
 cur = con.cursor()

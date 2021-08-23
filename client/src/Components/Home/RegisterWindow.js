@@ -48,6 +48,12 @@ class RegisterWindow extends Component {
         })
     } else {
       console.error("Error in the register form")
+      console.log({
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password,
+        location: this.state.location
+      })
     }
   }
 
