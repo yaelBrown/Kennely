@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import Loading from '../ReusableComponents/Loading.js'
 import SidebarLeft from '../Components/Dashboard/SidebarLeft.js'
@@ -19,11 +20,11 @@ import Messenger from '../Components/Messenger/Messenger.js'
 import Blog from '../Components/Blog/Blog.js'
 
 import '../Assets/css/dashboard.css'
+import { Redirect } from 'react-router-dom'
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props)
-  
     this.state = {
       loading: true,
       display: "feed",
@@ -90,31 +91,45 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    if (this.state.loading) {
-      return (
-        <div>
-          <Loading/>
-        </div>
-      )
-    } else {
-      return (
-        <div id="dashboardBackground">
-          <SearchBar 
-            data={{changeDisplay: this.changeDisplay.bind(this)}}
-            newNotifications={this.state.dashboardData.notifications.isNewNotifications}
-            newMessages={this.state.dashboardData.newMessages}
-            itemsInCart={this.state.dashboardData.isItemsInCart}
-            />
-          <SidebarLeft
-            data={{changeDisplay: this.changeDisplay.bind(this)}}
-            userLoggedIn={this.state.isLoggedIn}
-            />
-          <SidebarRight data={{changeDisplay: this.changeDisplay.bind(this)}}/>
-          <div id="dashboardMainContent">
-            { this.displayContent() }
+    // if (this.props.user.isAuth) {
+    if (true) {
+      if (this.state.loading) {
+        return (
+          <div>
+            <Loading/>
           </div>
-        </div>
-      )
+        )
+      } else {
+        return (
+          <div id="dashboardBackground">
+            <SearchBar 
+              data={{changeDisplay: this.changeDisplay.bind(this)}}
+              newNotifications={this.state.dashboardData.notifications.isNewNotifications}
+              newMessages={this.state.dashboardData.newMessages}
+              itemsInCart={this.state.dashboardData.isItemsInCart}
+              />
+            <SidebarLeft
+              data={{changeDisplay: this.changeDisplay.bind(this)}}
+              userLoggedIn={this.state.isLoggedIn}
+              />
+            <SidebarRight data={{changeDisplay: this.changeDisplay.bind(this)}}/>
+            <div id="dashboardMainContent">
+              { this.displayContent() }
+            </div>
+          </div>
+        )
+      }
+    } else {
+      return (<Redirect to="/"/>)
     }
+
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(Dashboard)

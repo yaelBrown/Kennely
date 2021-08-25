@@ -30,11 +30,27 @@ class RegisterWindow extends Component {
 
   handleRegister = () => {
     let allInputsValid = true;
+    let message = ""
     
-    if (!RegisterService.validateInput("name", this.state.name)) allInputsValid = false
-    if (!RegisterService.validateInput("email", this.state.email)) allInputsValid = false
-    if (!RegisterService.validateInput("password", this.state.password)) allInputsValid = false
-    if (!RegisterService.validateInput("location", this.state.location)) allInputsValid = false
+    if (!RegisterService.validateInput("name", this.state.name)) {
+      allInputsValid = false
+      message = "Invalid name"
+    }
+
+    if (!RegisterService.validateInput("email", this.state.email)) {
+      allInputsValid = false
+      message = "Invalid email"
+    }
+
+    if (!RegisterService.validateInput("password", this.state.password)) {
+      allInputsValid = false
+      message = "Invalid password"
+    }
+
+    if (!RegisterService.validateInput("location", this.state.location)) {
+      allInputsValid = false
+      message = "Invalid location"
+    }
 
     if (allInputsValid) {
       RegisterService.registerUser(this.state)
@@ -47,7 +63,7 @@ class RegisterWindow extends Component {
           console.error("Error saving user: " + error)
         })
     } else {
-      console.error("Error in the register form")
+      console.error("Error in the register form: " + message)
       console.log({
         name: this.state.name,
         email: this.state.email,

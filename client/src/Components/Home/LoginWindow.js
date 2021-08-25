@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState, useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Button } from 'reactstrap'
 import { connect } from 'react-redux'
 
@@ -13,7 +14,9 @@ function LoginWindow(props) {
       rememberMe: false,
   }
 
-  const [state, setState] = useState(initialState)
+  const [state, setState] = useState(initialState);
+  
+  let history = useHistory();
 
   const clearPasswordWithinForm = () => {
    setState(state.password = "")
@@ -42,8 +45,9 @@ function LoginWindow(props) {
       .then(data => {
         // console.log(data)
         if (typeof(data)  === "object") {
+          data.isAuth = true
           props.userToStore(data)
-          window.location.href = "/dashboard"
+          history.push("/dashboard")
         } else { 
           clearPasswordWithinForm()
           console.error("Invalid Login")

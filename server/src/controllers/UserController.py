@@ -62,14 +62,14 @@ def registerUser():
   newUser["location"] = data["location"]
   newUser["password"] = Bcrypt.generate_password_hash(None, data["password"], 12)
   newUser["gender"] = data["gender"]
-  newUser["isAdmin"] = 0
+  newUser["is_admin"] = 0
   newUser["name"] = data["name"]
   if data["profilePic"] == None or data["profilePic"] == "": 
     newUser["profile_pic"] = "" # eventually add url for default profile picture
   else: 
     newUser["profile_pic"] = data["profilePic"]
-  newUser["date_created"] = datetime.datetime.now().strftime('%Y-%m-%d')
-  newUser["date_last_login"] = ""
+  newUser["date_created"] = int(datetime.now().timestamp())
+  newUser["date_last_login"] = 0
 
   nU = u.registerUser(newUser)
 

@@ -1,7 +1,7 @@
 import json
 from flask_bcrypt import Bcrypt
 from flask_jwt import jwt, jwt_required, current_identity
-import datetime
+from datetime import datetime
 import calendar
 import time
 import sys
@@ -16,7 +16,7 @@ class UserService:
     
     def _updateLastLogin():
       try: 
-        dll = datetime.datetime.now().strftime('%Y-%m-%d %H:%M') # dll - date last loggedIn
+        dll = int(datetime.now().timestamp()) # dll - date last loggedIn
         sql = "Update users set date_last_login = %s where email = %s"
 
         cur.execute(sql, (dll, email))
@@ -50,12 +50,12 @@ class UserService:
         raise Exception("Incorrect Password")
     except Exception as e: 
       print({"msg": e})
-      return {"msg": e}
+      return {"msg": str(e)}
 
 
   def registerUser(self, newUser): 
     try: 
-      sql = "insert into users (email, location, password, gender, isAdmin, name, profile_pic, date_created, date_last_login) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+      sql = "insert into users (email, location, password, gender, is_admin, name, profile_pic, date_created, date_last_login) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
       
       # print(newUser)
       
@@ -64,7 +64,7 @@ class UserService:
         newUser["location"],
         newUser["password"],
         newUser["gender"],
-        newUser["isAdmin"],
+        newUser["is_admin"],
         newUser["name"],
         newUser["profile_pic"],
         newUser["date_created"],
