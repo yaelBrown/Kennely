@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import Loading from '../ReusableComponents/Loading.js'
 import SidebarLeft from '../Components/Dashboard/SidebarLeft.js'
@@ -19,12 +20,14 @@ import Notification from '../Components/Notifications/Notifications.js'
 import Messenger from '../Components/Messenger/Messenger.js'
 import Blog from '../Components/Blog/Blog.js'
 
+import DashboardService from '../Services/DashboardService.js'
+
 import '../Assets/css/dashboard.css'
-import { Redirect } from 'react-router-dom'
 
 class Dashboard extends Component {
   constructor(props) {
     super(props)
+    this.props.user.id = 7    // For development purposes only
     this.state = {
       loading: true,
       display: "feed",
@@ -86,13 +89,18 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    // Pull logged in user information from redux and start passing it to components
+    DashboardService.firstLoad(this.props.user.id)
+      .then(res => console.log(res))
+
+      // This request is not working
+
+
     this.setState({loading: false})
   }
 
   render() {
     // if (this.props.user.isAuth) {
-    if (true) {
+    if (true) {   // For development purposes only
       if (this.state.loading) {
         return (
           <div>

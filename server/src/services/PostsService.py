@@ -1,8 +1,6 @@
 import json
 
-from pymongo import DESCENDING
 from bson import json_util, ObjectId
-
 from config.config_mysql import (cur, con)
 
 class PostsService: 
@@ -23,9 +21,22 @@ class PostsService:
       print(e)
       return str(e)
 
-  def getPost(self, user_id):
+  def getPosts(self, user_id): 
     # passing user_id to get personalized feed based on friends.
     #   currently friends is not implemented
+    try: 
+      if type(user_id) != int: 
+        raise Exception("post_id is not a integer")
+
+      sql = "select * from posts limit 25"
+      cur.execute(sql)
+      
+      return cur.fetchall()
+    except Exception as e:
+      print(e)
+      return False
+
+  def getPost(self, user_id):
     try: 
       if type(user_id) != int: 
         raise Exception("post_id is not a integer")
@@ -33,7 +44,7 @@ class PostsService:
       sql = "select * from posts where id = %s"
       cur.execute(sql, user_id)
       
-      return cur.fetchall()
+      return cur.fetchone()
     except Exception as e:
       print(e)
       return False

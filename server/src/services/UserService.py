@@ -27,7 +27,7 @@ class UserService:
         return False
 
     try: 
-      requestedUser = self.getUser(email)
+      requestedUser = self.getUser(email, "all")
       
       if requestedUser is None:
         raise Exception("Cannot find user by email: " + email)
@@ -40,9 +40,16 @@ class UserService:
         
         _updateLastLogin()
         
+        print(requestedUser)
+
         out = {
           "id": requestedUser["id"],
-          "email": requestedUser["email"]
+          "email": requestedUser["email"],
+          "name": requestedUser["name"],
+          "gender": requestedUser["gender"],
+          "location": requestedUser["location"],
+          "coverPic": requestedUser["cover_pic"],
+          "profilePic": requestedUser["profile_pic"]
         }
         
         return {"token": "token", "user": out, "msg": "ok"}
@@ -99,7 +106,7 @@ class UserService:
         elif isLoggingIn == "cache":
           sql = "Select name, profilePic, location where id = %d"
       elif isinstance(uId, str):
-        sql = "Select id, email, password from users where email = %s"
+        sql = "Select id, email, password, name, location, profile_pic, cover_pic, gender from users where email = %s"
 
       cur.execute(sql, (uId))
       con.commit()

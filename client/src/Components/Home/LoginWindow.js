@@ -30,10 +30,8 @@ function LoginWindow(props) {
   }
  
   const handleLogin = () => {
-    console.log("handleLogin")
-    console.log({email: state.email, password: state.password, rememerMe: state.rememberMe})
+    // console.log({email: state.email, password: state.password, rememerMe: state.rememberMe})
 
-    
     if (!state.email || !state.password) return
     let rememberMe = state.rememberMe
     
@@ -43,9 +41,9 @@ function LoginWindow(props) {
 
     LoginService.login(state.email, state.password, rememberMe)
       .then(data => {
-        // console.log(data)
         if (typeof(data)  === "object") {
           data.isAuth = true
+          console.log(data)
           props.userToStore(data)
           history.push("/dashboard")
         } else { 

@@ -30,6 +30,32 @@ class Feed extends Component {
     }
   }
   
+
+
+
+
+
+
+// convert to functional component
+// check if component can see state data, if so pull id
+// once you have id make request for feed on backend (should this be in dashboard component ?)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   componentDidMount() {
     // let res = await FeedService.getFeed()
     //   .then(data => {
@@ -238,16 +264,12 @@ class Feed extends Component {
 
 const mapStateToProps = state => {
   return {
-    userCache: state.userCache
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    getUsersFromCache: () => dispatch(getUsersFromCache()),
-    addUserToCache: (userData) => dispatch(addUserToCache()),
-    addUsersToCache: (usersData) => dispatch(addUsersToCache())
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed)
