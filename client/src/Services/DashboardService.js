@@ -8,19 +8,7 @@ class DashboardService {
     if (user_id === undefined || parseInt(user_id) === undefined) {
       return {}
     } else {
-      const config = { 
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        },
-        data: JSON.stringify({
-          "user_id": user_id
-        })
-      }
-
-      console.log(config)
-
-      return await axios.get(API_URL + prefix, config) 
+      return await axios.get(API_URL + prefix + `?user_id=${user_id}`) 
     }
   }
 }

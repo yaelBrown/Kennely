@@ -90,11 +90,11 @@ class Dashboard extends Component {
 
   componentDidMount() {
     DashboardService.firstLoad(this.props.user.id)
-      .then(res => console.log(res))
-
-      // This request is not working
-
-
+      .then(res => res.data.data)
+      .then(res => {
+        console.log(res)
+        // move this to state
+      })
     this.setState({loading: false})
   }
 
