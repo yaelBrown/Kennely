@@ -2,40 +2,44 @@ import json
 
 from pymongo import DESCENDING
 from bson import json_util, ObjectId
-from config.config_mongo import db
+
+from config.config_mysql import (cur, con)
 
 class PostsService: 
-  def createPost(self, p):
+  def createPost(self, newPost):
     try: 
-      newPosts = db.posts.insert_one(p)           # convert this method to mysql
-      return str(newPosts.inserted_id)
+      sql = "insert into posts (users_id, caption, post_type, content_src, date) values (%s, %s, %s, %s, %s)"
+      cur.execute(sql, (
+        newPost["users_id"],
+        newPost["caption"],
+        newPost["post_type"],
+        newPost["content_src"],
+        newPost["date"]
+      ))
+
+      con.commit()
+      return True      
+    except Exception as e:
+      print(e)
+      return str(e)
+
+  def getPost(self, user_id):
+    # passing user_id to get personalized feed based on friends.
+    #   currently friends is not implemented
+    try: 
+      if type(user_id) != int: 
+        raise Exception("post_id is not a integer")
+
+      sql = "select * from posts where id = %s"
+      cur.execute(sql, user_id)
+      
+      return cur.fetchall()
     except Exception as e:
       print(e)
       return False
 
-  def getPost(self, postsId):
-    try:
-      resultPosts = db.posts.find_one({"_id": ObjectId(postsId)})
-      return resultPosts
-    except Exception as e:
-      print(e)
-      return False
-
-  def getPostsById(self, uId):
-    try: 
-      resultPosts = db.posts.find({"authorId": uId})
-      return resultPosts
-    except Exception as e:
-      print(e)
-      return False
-
-  def getPosts(self):
-    try: 
-      resultPosts = db.posts.find().limit(250).sort("dateTime", DESCENDING)
-      return resultPosts
-    except Exception as e:
-      print(e)
-      return False
+  def getMorePosts(self, user_id, offset):
+    pass
 
   def editPost(self, postsId):
     pass

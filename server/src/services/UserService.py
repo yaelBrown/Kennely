@@ -73,7 +73,6 @@ class UserService:
       
       con.commit()
       return True
-
     except Exception as e: 
       print(e)
       return str(e)
@@ -104,9 +103,8 @@ class UserService:
 
       cur.execute(sql, (uId))
       con.commit()
-      res = cur.fetchone()
-      print(res)
-      return res
+      
+      return cur.fetchone()
     except Exception as e: 
       print(e)
       return False
@@ -126,9 +124,8 @@ class UserService:
 
         cur.execute(sql, tuple(uIds))
         con.commit()
-        res = cur.fetchall()
-        print(res)
-      return res
+
+      return cur.fetchall()
     except Exception as e:
       print(e)
       return False

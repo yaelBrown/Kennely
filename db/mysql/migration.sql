@@ -18,11 +18,30 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+INSERT INTO `users` VALUES (7,'admin@admin.com','$2b$12$OzvCYmHZ1WODQfh3nsBNnOuyObCWnIMNPwGN0mQCjgz/Eawz/tFkq',0,'admin','adminville, tx',1,NULL,'/Assets/img/userPlaceholder.jpg',1629833599,1629900932);
+
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT, 
-  `author_id` int NOT NULL, 
+  `users_id` int NOT NULL, 
   `caption` VARCHAR(255) NULL,
-  `postType` VARCHAR(255) NOT NULL,
-  `contentSrc` VARCHAR(255) NULL,
+  `post_type` VARCHAR(255) NOT NULL,
+  `content_src` VARCHAR(255) NULL,
+  `date` BIGINT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `date` bigint NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `likes` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `posts_id` int DEFAULT NULL,
+  `comment_id` int DEFAULT NULL,
+  `users_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
