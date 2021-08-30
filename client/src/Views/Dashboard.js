@@ -92,8 +92,8 @@ class Dashboard extends Component {
     DashboardService.firstLoad(this.props.user.id)
       .then(res => res.data.data)
       .then(res => {
-        console.log(res)
-        // move this to state
+        console.log(res.posts)
+        this.props.feedToStore(res.posts)
       })
     this.setState({loading: false})
   }
@@ -134,10 +134,17 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapDispatchToProps = dispatch => {
   return {
-    user: state.user
+    feedToStore: (payload) => dispatch({ type: "INITIAL_FEED_DISPLAY", payload})
   }
 }
 
-export default connect(mapStateToProps)(Dashboard)
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    feed: state.feed
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

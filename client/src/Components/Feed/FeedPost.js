@@ -14,7 +14,7 @@ export default class FeedPost extends Component {
 
   render() {
     const displayContent = () => {
-      switch(this.props.data.postType) {
+      switch(this.props.data.post_type.toLowerCase()) {
         case "text":
           return <span className="feedPostContentText">{this.props.data.caption}</span>
         case "photo":
@@ -43,10 +43,7 @@ export default class FeedPost extends Component {
         </div>
         <div className="feedDivs feedDivRight">
           <div className="feedPostContent">
-            {/* <div className="feedHoverOptions">
-              hover stuff
-            </div> */}
-            {displayContent()}
+            { displayContent() }
           </div>
         </div>
       </div>

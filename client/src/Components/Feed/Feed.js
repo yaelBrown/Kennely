@@ -18,7 +18,7 @@ import { addUsersToCache, addUserToCache, getUsersFromCache } from '../../Redux/
 class Feed extends Component {
   constructor(props) {
     super(props)
-  
+    console.log(props)
     this.state = {
       loading: false,
       adFrequency: 8,
@@ -30,7 +30,6 @@ class Feed extends Component {
     }
   }
   
-
 
 
 
@@ -57,22 +56,7 @@ class Feed extends Component {
 
 
   componentDidMount() {
-    // let res = await FeedService.getFeed()
-    //   .then(data => {
-    //     if (data.data) {
-    //       let userObj = {}
-    //       data.users.map((e) => {
-    //         userObj[e._id] = e
-    //       })
-    //       let newState = {
-    //         masterFeed: data.data,
-    //         userCache: userObj
-    //       }
-    //       this.setState(newState)
-    //     }
-    //   })
-
-    // this.getFeed()
+    console.log(this.props.feed)
   }
 
   async updateFeed() {
@@ -97,33 +81,28 @@ class Feed extends Component {
   }
 
   generateFeed() {
-    if (this.state.masterFeed === undefined) {
-      return
+    if (this.props.feed.posts !== undefined && this.props.feed.posts.length > 0) {
+      let out = []
+      this.props.feed.posts.map((e, i) => {
+        // if (i % this.state.adFrequency == 0) visibleFeed.push(<FeedPost type="ad" data={e} />)
+        switch (e.post_type.toLowerCase()) {
+          case "text":
+            out.push(<FeedPost type="text" data={e} />)
+            break;
+          case "photo":
+            out.push(<FeedPost type="photo" data={e} />)
+            break;
+          case "video":
+            out.push(<FeedPost type="video" data={e} />)
+            break;
+          default:
+            break;
+        }
+      })
+      return out;
+    } else {
+      return []
     }
-    let visibleFeed = []
-    if (this.state.masterFeed.length === 0 || this.state.masterFeed.length === undefined) {
-      return visibleFeed;
-    }
-    this.state.masterFeed.map((e, i) => {
-      if (i % this.state.adFrequency == 0) visibleFeed.push(<FeedPost type="ad" data={e} />)
-      e.name = this.state.userCache[e.authorId].name
-      e.location = this.state.userCache[e.authorId].location
-      e.profilePic = this.state.userCache[e.authorId].profilePic
-      switch (e.postType) {
-        case "text":
-          visibleFeed.push(<FeedPost type="text" data={e} />)
-          break;
-        case "photo":
-          visibleFeed.push(<FeedPost type="photo" data={e} />)
-          break;
-        case "video":
-          visibleFeed.push(<FeedPost type="video" data={e} />)
-          break;
-        default:
-          break;
-      }
-    })
-    return visibleFeed;
   }
 
   setActiveTab(tabNum) {
@@ -231,7 +210,9 @@ class Feed extends Component {
             <TabContent activeTab={this.state.tabs.activeTab}>
               
               <TabPane tabId="1">
-                <h4>1</h4>
+                <span onDoubleClick={() => console.log(this.props.feed)}>
+                  { this.generateFeed() }  
+                </span>
               </TabPane>
 
               <TabPane tabId="2">
@@ -250,7 +231,6 @@ class Feed extends Component {
 
             </TabContent>
 
-            { this.generateFeed() }
             {/* <FeedPost data={this.examplePostText()}/>
             <FeedPost data={this.examplePostPhoto()}/>
             <FeedPost data={this.examplePostPhoto()}/>
@@ -264,7 +244,8 @@ class Feed extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    feed: state.feed
   }
 }
 
