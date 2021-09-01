@@ -28,7 +28,7 @@ class PostsService:
       if type(user_id) != int: 
         raise Exception("post_id is not a integer")
 
-      sql = "select * from posts limit 25"
+      sql = "select posts.*, users.name, users.profile_pic, users.location from posts, users where users.id = posts.users_id limit 25"
       cur.execute(sql)
       
       return cur.fetchall()

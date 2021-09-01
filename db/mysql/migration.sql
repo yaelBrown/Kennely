@@ -18,7 +18,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `users` VALUES (7,'admin@admin.com','$2b$12$OzvCYmHZ1WODQfh3nsBNnOuyObCWnIMNPwGN0mQCjgz/Eawz/tFkq',0,'admin','adminville, tx',1,NULL,'/Assets/img/userPlaceholder.jpg',1629833599,1629900932);
+INSERT INTO `users` VALUES 
+  (7,'admin@admin.com','$2b$12$OzvCYmHZ1WODQfh3nsBNnOuyObCWnIMNPwGN0mQCjgz/Eawz/tFkq',0,'admin','adminville, tx',1,NULL,'/Assets/img/userPlaceholder.jpg',1629833599,1630283644),
+  (8,'yael@yael.com','$2b$12$lHe9kddcbcXe792JAosn1u9rumjYp2WohVDcJ8LCBWNvnKXElXcda',0,'yael','Baltimore, MD',1,NULL,'/Assets/img/userPlaceholder.jpg',1630355779,0);
 
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT, 
@@ -29,6 +31,10 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `date` BIGINT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `posts` VALUES 
+  (7,1,'inserted post from sql','text','',1630018848),
+  (8,1,'new post, new post, new post','text','',1630019466);
 
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,

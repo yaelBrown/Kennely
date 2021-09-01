@@ -18,7 +18,7 @@ import { addUsersToCache, addUserToCache, getUsersFromCache } from '../../Redux/
 class Feed extends Component {
   constructor(props) {
     super(props)
-    console.log(props)
+
     this.state = {
       loading: false,
       adFrequency: 8,
@@ -30,30 +30,6 @@ class Feed extends Component {
     }
   }
   
-
-
-
-
-
-// convert to functional component
-// check if component can see state data, if so pull id
-// once you have id make request for feed on backend (should this be in dashboard component ?)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   componentDidMount() {
     console.log(this.props.feed)
