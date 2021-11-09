@@ -1,7 +1,0 @@
-/Users/yaelbrown/Projz/Peterest
-
-CLOUDINARY_URL=cloudinary://721255349815889:mBpJXz-92u0acgzz-VSbKjNsZ74@peterest
-
-
-721255349815889
-mBpJXz-92u0acgzz-VSbKjNsZ74

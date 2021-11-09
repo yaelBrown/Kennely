@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS `peterest_db`;
 
-USE peterest_db;
+USE kennely;
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,

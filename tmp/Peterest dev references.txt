@@ -1,9 +1,0 @@
-Peterest dev references
-
-python flask-jwt - https://pythonhosted.org/Flask-JWT/
-
-pymongo examples - https://gist.github.com/nikhilkumarsingh/2c39d161f3d5fe4a40c24d7c9a7a11c3
-
-react childToParent - https://github.com/yaelBrown/reactChildToParent/blob/main/client/src/Parent.js
-
-redux - https://www.youtube.com/watch?v=CVpUuw9XSjY&t=946s

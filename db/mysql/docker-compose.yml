@@ -1,8 +1,9 @@
 version: "3.8"
 services:
-  pet_mysql:
+  kennely_mysql:
     image: mysql:latest
-    container_name: pet_mysql
+    container_name: kennely_mysql_db
+    build: ./
     environment:
       - MYSQL_ROOT_PASSWORD=petmeplz
     ports: 
